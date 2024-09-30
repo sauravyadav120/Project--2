@@ -1,0 +1,38 @@
+1. Core Features:
+   a. Activity Tracking:
+   Background Agent: Use Python’s threading or multiprocessing to create a background agent that monitors user activity.
+   Input Tracking: Utilize libraries like pynput for mouse and keyboard input tracking to differentiate between genuine and scripted activities. Irregular movements or unusual input timing could be flagged or discarded.
+   Configurable Screenshots: Allow users to toggle screenshot capturing and whether to blur them. Libraries like PIL (Pillow) can handle image processing.
+   b. Configurable Screenshot Intervals:
+   Allow users to define intervals for screenshot capture. The configuration should be received from a web application using polling or websockets (using requests, websockets, or Flask).
+   On receiving updated configuration, adjust the intervals or the screenshot settings dynamically without restarting the agent.
+   c. Time Zone Management:
+   Time Zone Detection: Use pytz or datetime for real-time detection of system time zone changes and ensure logs are adjusted accordingly.
+   d. Data Upload:
+   AWS S3 Upload: Use the boto3 library to upload screenshots and activity logs to Amazon S3.
+   Chunked Uploads: Implement multipart uploads in boto3 to handle large files. Compress screenshots before uploading with libraries like Pillow.
+   Encryption: Ensure SSL/TLS encryption during file uploads.
+   e. Error Handling and Resilience:
+   Queue uploads in case of network disconnections and retry once the connection is restored.
+   Handle abrupt shutdowns safely by storing unsynced logs locally for future uploads.
+   Detect firewall issues and provide informative error messages using exception handling.
+   f. Instance Management:
+   Prevent multiple instances using file locks or checking active processes with psutil.
+2. Best Practices and Optimizations:
+   Memory and Performance: Ensure minimal resource consumption using memory optimization techniques, e.g., deleting old logs/screenshots, and handling data asynchronously.
+   File Size Management: Compress files using gzip or Pillow before uploading, and clean up old screenshots periodically.
+3. Optional Features:
+   Auto-Update Mechanism: Implement a self-update feature using GitHub releases or a custom server, using requests to download and install updates.
+   Low Battery Detection: For laptops, use psutil to detect battery levels and pause activity tracking if the battery is low.
+   Enhanced Security: Add multi-factor authentication for configuration changes or access using PyOTP.
+4. Testing:
+   Unit Tests: Validate activity tracking, configuration updates, and file uploads using Python's unittest or pytest.
+   Integration Tests: Test interactions between components, including simulated network outages and file upload retries.
+5. Submission:
+   Follow the submission guidelines, either through a GitHub repository or as a zipped project file, including a comprehensive README with setup instructions.
+   Libraries to Use:
+   boto3 – For AWS S3 file upload.
+   pynput – For mouse and keyboard tracking.
+   Pillow – For image processing (blurring/compression).
+   psutil – For monitoring system processes and battery levels.
+   pytz – For managing time zones.
